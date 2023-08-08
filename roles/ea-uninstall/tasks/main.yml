@@ -1,0 +1,24 @@
+---
+# tasks file for Elastic Agent Uninstall
+
+- name: Uninstall Agent
+  ansible.builtin.expect:
+    chdir: "{{ agent_install_dir }}"
+    command: ./elastic-agent uninstall
+    responses:
+       Do you want to continue: "{{ agent_prompt }}"
+    timeout: 120
+    echo: yes
+  tags: uninstall
+  register: uninstall_status
+- debug:
+    var: uninstall_status
+
+- name: Delete Agent Package Files and perform housekeeping
+  ansible.builtin.command: find . -iname "elastic*" -exec rm -r {} \;
+  args:
+    chdir: /opt
+  register: delete_status
+  tags: delete_package
+- debug:
+    var: delete_status

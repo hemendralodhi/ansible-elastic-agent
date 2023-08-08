@@ -1,0 +1,18 @@
+# global variables applicable to all inventory hosts
+
+# install variables
+
+agent_version: "8.8.2"
+agent_url: "https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.8.2-linux-x86_64.tar.gz"
+agent_dest: "/opt/"
+agent_switch_dir: "/opt/elastic-agent-8.8.2-linux-x86_64/"
+agent_fleet_url: "https://cb7a4e9e8eb0495e9c8babe7a90982f3.fleet.ap-southeast-2.aws.found.io:443"
+agent_enroll_token: "bmVoMm1va0JIRlBISDR3VTExcmk6emV3ZFN2dWVRVGU5eXp0MEdubFJ5dw=="
+agent_prompt: "Y" 
+
+# upgrade variables
+
+agent_install_dir: "/opt/Elastic/Agent"
+agent_upgrade_version: "8.9.0"
+agent_pgp_key : "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+
