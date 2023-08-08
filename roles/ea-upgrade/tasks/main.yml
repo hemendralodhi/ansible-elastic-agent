@@ -1,20 +1,6 @@
 ---
 # tasks file for Elastic Agent upgrade
 
-- name: Upgrade Elastic Agent on Dynamic EC2 instance inventory
-  block:
-    - name: Check Version Installed
-      ansible.builtin.shell: |
-         set -o pipefail
-         if [ -f /opt/Elastic/Agent ]; then
-         /opt/Elastic/Agent/elastic-agent version |tail -1 |cut -d ' ' -f 2
-         fi
-      args:
-        executable: /bin/bash
-      register: agent_version_status
-      tags: version
-      #changed_when: agent_version_status.stdout != agent_upgrade_version
-
 - name: Upgrade Elastic Agent to "{{ agent_upgrade_version }}"
   ansible.builtin.command: ./elastic-agent upgrade "{{ agent_upgrade_version }}" --pgp-uri "{{ agent_pgp_key }}"
   args:
