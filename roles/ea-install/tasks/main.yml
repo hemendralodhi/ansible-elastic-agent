@@ -1,7 +1,7 @@
 ---
 # tasks file for Elastic Agent install
 
-- name: Download Agent Package
+- name: Download Elastic Agent - "{{ agent_version }}"
   ansible.builtin.get_url:
     url: "{{ agent_url }}"
     dest: "{{ agent_dest }}"
@@ -9,7 +9,7 @@
   register: download_status
   tags: download
   
-- name: Unarchive Agent Package
+- name: Unarchive Elastic Agent - "{{ agent_version }}"
   ansible.builtin.unarchive:
     src: "{{ agent_url }}"
     dest: "{{ agent_dest }}"
@@ -17,7 +17,7 @@
   register: unarchive_status
   tags: unarchive
     
-- name: Install Agent
+- name: Install Elastic Agent - "{{ agent_version }}"
   ansible.builtin.expect:
     chdir: "{{ agent_switch_dir }}"
     command: ./elastic-agent install --url="{{ agent_fleet_url }}" --enrollment-token="{{ agent_enroll_token }}"

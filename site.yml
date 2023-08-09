@@ -2,7 +2,8 @@
 
 # Playbook to Download and Install Elastic Agent and connect to Fleet Server - For Dynamic AWS EC2 instances inventory
 
-- hosts: tag_Name_Elastic_2
+- hosts: tag_elastic_agent_yes
+  serial: 5
   become: 'yes'
   gather_facts: 'yes'
 

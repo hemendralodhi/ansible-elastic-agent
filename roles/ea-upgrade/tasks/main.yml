@@ -1,12 +1,12 @@
 ---
 # tasks file for Elastic Agent upgrade
 
-- name: Upgrade Elastic Agent to "{{ agent_upgrade_version }}"
+- name: Upgrading Elastic Agent from "{{ agent_version }}" to "{{ agent_upgrade_version }}"
   ansible.builtin.command: ./elastic-agent upgrade "{{ agent_upgrade_version }}" --pgp-uri "{{ agent_pgp_key }}"
   args:
     chdir: "{{ agent_install_dir }}"
   tags: upgrade
-  timeout: 120
+  timeout: 300
   register: upgrade_status
 - debug:
     var: upgrade_status

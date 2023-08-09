@@ -1,7 +1,7 @@
 ---
 # tasks file for Elastic Agent Uninstall
 
-- name: Uninstall Agent
+- name: Uninstall Elastic Agent 
   ansible.builtin.expect:
     chdir: "{{ agent_install_dir }}"
     command: ./elastic-agent uninstall
@@ -14,11 +14,29 @@
 - debug:
     var: uninstall_status
 
-- name: Delete Agent Package Files and perform housekeeping
-  ansible.builtin.command: find . -iname "elastic*" -exec rm -r {} \;
-  args:
-    chdir: /opt
-  register: delete_status
-  tags: delete_package
-- debug:
-    var: delete_status
+- name: Remove Elastic Agent Installation Files
+  block:
+   - name: List all the Elastic Agent Files from path "{{ agent_dest }}"
+     find:
+       paths: "{{ agent_dest }}"
+       patterns: (?i).*elastic.*
+       use_regex: true
+       recurse: yes
+       file_type: any
+     register: find_status
+     tags: find_files
+   - debug:
+       var: find_status
+
+   - name: Delete Elastic Agent Files and Directories from path "{{ agent_dest }}"
+     file:
+       path: "{{ item.path }}"
+       state: absent
+     with_items: "{{ find_status.files }}"
+     loop_control:
+       label: "{{ item.path }}"
+     register: delete_status
+     tags: delete_files
+   - debug:
+       var: delete_status  
+
